@@ -1,0 +1,37 @@
+Project: /MNT Tensor CLI visualiser — high-throughput C++ rewrite
+
+Goal:
+Replace the Python prototype with a single-file native C++ terminal audio visualiser that targets a locked 60 FPS update rate in KDE Konsole. It must use a dense full-screen TrueColor color-matrix, zero per-frame allocations, a two-thread architecture, and a single atomic terminal flush.
+
+Core features
+- Capture the default PipeWire/PulseAudio sink monitor via `parec`.
+- Two-thread design: audio thread (parec + FFT) and render/math thread (fixed 16.6 ms loop).
+- Spectrum data (bass/mid/treble/volume) passed via lock-free `std::atomic<float>` variables.
+- Single flat `std::string` frame buffer reserved once and reused every frame.
+- `\x1b[H` home at the start of every frame; no `\x1b[2J` or clearing fills.
+- One `write(STDOUT_FILENO, ...)` logical flush per frame.
+- Cache-friendly flat `float` arrays for geometry and math; manual FFT on a fixed 1024-sample buffer.
+- Full-screen background-color matrix (`\x1b[48;2;R;G;Bm `) with one distinct 24-bit color per cell.
+- Random, audio-reactive, less-symmetrical plasma field.
+- Mute and terminal resize handling with `pactl` and `SIGWINCH`/`TIOCGWINSZ`.
+- `q` / Ctrl-C to quit and restore terminal.
+
+Architecture / files
+- mnt_tensor_visualizer.cpp : single-file C++ implementation
+- build.sh                  : g++ -O3 compilation command
+
+Performance architecture
+1. Audio thread spawns `parec`, reads 1024-frame s16le chunks, converts to mono float, runs a pre-windowed in-place FFT, and stores band shares and volume in `std::atomic<float>`.
+2. Render thread sleeps to the next absolute 16.6 ms deadline using `clock_nanosleep(CLOCK_MONOTONIC, TIMER_ABSTIME)`, reads the atomics, computes the flat field, builds one `std::string` with all ANSI codes, and flushes it with a single `write()`.
+3. Frame buffer is `std::string` with `.reserve()` sized to `rows * (cols-1) * 28`; `.clear()` each frame but never re-allocates unless the terminal resizes.
+4. Geometry `x`, `y`, `d` arrays are precomputed on resize to avoid per-frame coordinate math.
+5. Terminal width is clamped to `cols - 1` per row to avoid Konsole wrap calculations.
+
+Dependencies
+- g++ (or clang++) with C++20 support
+- pthread, rt (Linux)
+- pulseaudio-utils (`pactl`, `parec`) / pipewire-pulse
+- No external FFT, audio, or terminal libraries
+
+Build
+- `g++ -O3 -pthread -std=c++20 -o mnt_tensor_visualizer mnt_tensor_visualizer.cpp`
