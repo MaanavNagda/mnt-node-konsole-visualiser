@@ -1,5 +1,5 @@
 #!/bin/sh
-# Install script for /MNT Tensor Konsole Visualiser
+# Install script for /MNT Node Konsole Visualiser
 set -e
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
@@ -15,20 +15,20 @@ if ! command -v pactl >/dev/null 2>&1 || ! command -v parec >/dev/null 2>&1; the
     exit 1
 fi
 
-echo "Building mnt_tensor_visualizer..."
-g++ -O3 -pthread -std=c++20 -o "${SCRIPT_DIR}/mnt_tensor_visualizer" "${SCRIPT_DIR}/mnt_tensor_visualizer.cpp"
+echo "Building mnt_node_visualizer..."
+g++ -O3 -pthread -std=c++20 -o "${SCRIPT_DIR}/mnt_node_visualizer" "${SCRIPT_DIR}/mnt_node_visualizer.cpp"
 
 mkdir -p "${INSTALL_DIR}"
-cp "${SCRIPT_DIR}/mnt_tensor_visualizer" "${INSTALL_DIR}/mnt_tensor_visualizer"
-chmod +x "${INSTALL_DIR}/mnt_tensor_visualizer"
+cp "${SCRIPT_DIR}/mnt_node_visualizer" "${INSTALL_DIR}/mnt_node_visualizer"
+chmod +x "${INSTALL_DIR}/mnt_node_visualizer"
 
 echo ""
-echo "Installed to ${INSTALL_DIR}/mnt_tensor_visualizer"
+echo "Installed to ${INSTALL_DIR}/mnt_node_visualizer"
 case ":$PATH:" in
     *":${INSTALL_DIR}:"*)
-        echo "Run it with: mnt_tensor_visualizer"
+        echo "Run it with: mnt_node_visualizer"
         ;;
     *)
-        echo "Add ${INSTALL_DIR} to your PATH, or run it directly with: ${INSTALL_DIR}/mnt_tensor_visualizer"
+        echo "Add ${INSTALL_DIR} to your PATH, or run it directly with: ${INSTALL_DIR}/mnt_node_visualizer"
         ;;
 esac

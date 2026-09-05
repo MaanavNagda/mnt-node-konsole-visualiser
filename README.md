@@ -1,4 +1,4 @@
-# /MNT Tensor Konsole Visualiser
+# /MNT Node Konsole Visualiser
 
 A locked-60-FPS, native C++ terminal audio visualiser built for KDE Konsole. It captures the audio you are currently hearing (the default PulseAudio/PipeWire sink monitor) and renders a dense, full-screen TrueColor plasma field that reacts to it in real time.
 
@@ -13,28 +13,28 @@ A locked-60-FPS, native C++ terminal audio visualiser built for KDE Konsole. It 
 ## Install
 
 ```bash
-git clone https://github.com/MaanavNagda/mnt-tensor-konsole-visualiser.git
-cd mnt-tensor-konsole-visualiser
+git clone https://github.com/MaanavNagda/mnt-node-konsole-visualiser.git
+cd mnt-node-konsole-visualiser
 chmod +x install.sh
 ./install.sh
 ```
 
-This builds the binary with aggressive optimisation flags and installs it to `~/.local/bin/mnt_tensor_visualizer`.
+This builds the binary with aggressive optimisation flags and installs it to `~/.local/bin/mnt_node_visualizer`.
 
 ## Manual build
 
 ```bash
-g++ -O3 -pthread -std=c++20 -o mnt_tensor_visualizer mnt_tensor_visualizer.cpp
-./mnt_tensor_visualizer
+g++ -O3 -pthread -std=c++20 -o mnt_node_visualizer mnt_node_visualizer.cpp
+./mnt_node_visualizer
 ```
 
 ## Usage
 
 ```bash
-mnt_tensor_visualizer
+mnt_node_visualizer
 ```
 
-The Konsole tab title is automatically set to `/MNT Tensor Visualiser` while running.
+The Konsole tab title is automatically set to `MNT Node Konsole Visualiser` while running.
 
 ### Controls
 
@@ -62,5 +62,5 @@ See `plan_cpp.txt` for the full design notes.
 ## Uninstall
 
 ```bash
-rm ~/.local/bin/mnt_tensor_visualizer
+rm ~/.local/bin/mnt_node_visualizer
 ```

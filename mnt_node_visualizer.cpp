@@ -26,7 +26,7 @@
 #include <unistd.h>
 
 // ---------------------------------------------------------------------------
-// build: g++ -O3 -pthread -std=c++20 -o mnt_tensor_visualizer mnt_tensor_visualizer.cpp
+// build: g++ -O3 -pthread -std=c++20 -o mnt_node_visualizer mnt_node_visualizer.cpp
 // ---------------------------------------------------------------------------
 
 constexpr int SAMPLE_RATE = 48000;
@@ -478,7 +478,7 @@ int main() {
         new_t.c_lflag &= ~(ICANON | ECHO | ISIG);
         tcsetattr(STDIN_FILENO, TCSANOW, &new_t);
 
-        const char init[] = "\x1b[?1049h\x1b[?25l\x1b]0;/MNT Tensor Visualiser\x07";
+        const char init[] = "\x1b[?1049h\x1b[?25l\x1b]0;MNT Node Konsole Visualiser\x07";
         ::write(STDOUT_FILENO, init, sizeof(init) - 1);
 
         signal(SIGWINCH, sigwinch_handler);

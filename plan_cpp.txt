@@ -1,4 +1,4 @@
-Project: /MNT Tensor CLI visualiser — high-throughput C++ rewrite
+Project: /MNT Node Konsole Visualiser — high-throughput C++ rewrite
 
 Goal:
 Replace the Python prototype with a single-file native C++ terminal audio visualiser that targets a locked 60 FPS update rate in KDE Konsole. It must use a dense full-screen TrueColor color-matrix, zero per-frame allocations, a two-thread architecture, and a single atomic terminal flush.
@@ -17,7 +17,7 @@ Core features
 - `q` / Ctrl-C to quit and restore terminal.
 
 Architecture / files
-- mnt_tensor_visualizer.cpp : single-file C++ implementation
+- mnt_node_visualizer.cpp : single-file C++ implementation
 - build.sh                  : g++ -O3 compilation command
 
 Performance architecture
@@ -34,4 +34,4 @@ Dependencies
 - No external FFT, audio, or terminal libraries
 
 Build
-- `g++ -O3 -pthread -std=c++20 -o mnt_tensor_visualizer mnt_tensor_visualizer.cpp`
+- `g++ -O3 -pthread -std=c++20 -o mnt_node_visualizer mnt_node_visualizer.cpp`
